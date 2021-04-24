@@ -1,6 +1,5 @@
 package com.example.todoList.controller
 
-import com.example.todoList.controller.ControllerTestBase
 import com.example.todoList.dto.TodoDto
 import com.example.todoList.entity.Todo
 import com.example.todoList.service.TodoService

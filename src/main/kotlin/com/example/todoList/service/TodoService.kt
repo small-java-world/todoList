@@ -3,8 +3,6 @@ package com.example.todoList.service
 import com.example.todoList.dto.TodoDto
 import com.example.todoList.entity.Todo
 import com.example.todoList.repository.TodoRepository
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.sql.Timestamp
