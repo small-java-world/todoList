@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Todo List</title>
+</head>
+<body>
+<div class="container">
+    <h1>todo list</h1>
+    <div class="row">
+    <table id="todoList">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>タイトル</td>
+            <td>内容</td>
+            <td>期限</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="todo:${todoListForm.todoList}" th:object="${todo}">
+            <td th:text="*{id}"></td>
+            <td th:text="*{title}"></td>
+            <td th:text="*{content}"></td>
+            <td th:text="*{limittimeLabel}"></td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+</body>
+</html>
