@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/searchTodo.js"></script>
+    <title>Todo List</title>
+</head>
+<body>
+<div class="container">
+    <h1>create todo</h1>
+    <form action="/regist" method="post">
+        <label>title:</label>
+        <input type="text" id="title" name="title" value="" /><br/>
+        <label>content:</label>
+        <input type="text" id="content" name="content" value="" /><br/>
+
+        <label>limittime(yyyy/mm/dd):</label>
+        <input type="text" id="limittimeText" name="limittimeText" value="" /><br/>
+        <button type="submit">登録</button>
+    </form>
+</div>
+</body>
+</html>

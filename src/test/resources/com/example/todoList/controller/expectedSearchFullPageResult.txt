@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/searchTodo.js"></script>
+    <title>Todo List</title>
+</head>
+<body>
+<div class="container">
+    <h1>todo list</h1>
+    <form method="post" id=“searchForm”>
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" id="searchCondTitle" name="searchCondTitle" size="10"><input type="button" value="検索" onclick="searchTodo();" >
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+    <table id="todoList">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>タイトル</td>
+            <td>内容</td>
+            <td>期限</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>5</td>
+            <td>todo5</td>
+            <td>5content</td>
+            <td>2021/04/20</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>todo6</td>
+            <td>6content</td>
+            <td>2021/04/21</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+</body>
+</html>

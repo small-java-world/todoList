@@ -2,30 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
+    <script type="text/javascript" th:src="@{/jquery-3.6.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{/searchTodo.js}"></script>
     <title>Todo List</title>
 </head>
 <body>
 <div class="container">
     <h1>todo list</h1>
+    <form method="post" id=“searchForm”>
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" id="searchCondTitle" name="searchCondTitle" size="10"><input type="button" value="検索" onclick="searchTodo();" >
+            </div>
+        </div>
+    </form>
+    <a href="/inputForm" th:href="@{/inputForm}">新規登録</a>
+
     <div class="row">
-    <table id="todoList">
-        <thead>
-        <tr>
-            <td>ID</td>
-            <td>タイトル</td>
-            <td>内容</td>
-            <td>期限</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="todo:${todoListForm.todoList}" th:object="${todo}">
-            <td th:text="*{id}"></td>
-            <td th:text="*{title}"></td>
-            <td th:text="*{content}"></td>
-            <td th:text="*{limittimeText}"></td>
-        </tr>
-        </tbody>
-    </table>
+        <table id="todoList">
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td>タイトル</td>
+                <td>内容</td>
+                <td>期限</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="todo:${todoListForm.todoList}" th:object="${todo}">
+                <td th:text="*{id}"></td>
+                <td th:text="*{title}"></td>
+                <td th:text="*{content}"></td>
+                <td th:text="*{limittimeText}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

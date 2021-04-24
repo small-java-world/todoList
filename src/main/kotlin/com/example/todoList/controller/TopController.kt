@@ -19,6 +19,6 @@ class TopController @Autowired constructor(private val todoService: TodoService)
     @GetMapping("list")
     fun list(): ModelAndView =
         ModelAndView("/list").apply { addObject("todoListForm",
-            TodoListForm(todoService.findTodoList())
+            TodoListForm(todoService.findTodoList(), null)
         ) }
 }

@@ -7,6 +7,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 
 @Service
@@ -21,6 +22,23 @@ class TodoService @Autowired constructor(private val todoRepository: TodoReposit
     fun findTodoList(): List<TodoDto> {
         val todoList = todoRepository.findAll()
         return convertToTodoListResult(todoList)
+    }
+
+    fun findTodoListByTitle(searchCondTitle: String?): List<TodoDto> {
+        val todoList = todoRepository.findByTitle("%$searchCondTitle%")
+        return convertToTodoListResult(todoList)
+    }
+
+    fun save(todoDto:TodoDto) :Boolean {
+        val dateFormat = SimpleDateFormat(LIMIT_TIME_FORMAT)
+        val limittime = Timestamp(dateFormat.parse(todoDto.limittimeText).time);
+
+        return try {
+            todoRepository.save(Todo(todoDto.id, todoDto.title!!, todoDto.content!!, limittime))
+            true;
+        }catch (e:Exception) {
+            false;
+        }
     }
 
     /**

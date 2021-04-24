@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" th:src="@{/jquery-3.6.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{/searchTodo.js}"></script>
+    <title>Todo List</title>
+</head>
+<body>
+<div class="container">
+    <h1>create todo</h1>
+    <form action="#" th:action="@{/regist}" method="post" th:object="${todoDto}">
+        <label>title:</label>
+        <input type="text" th:field="*{title}" /><br/>
+        <label>content:</label>
+        <input type="text" th:field="*{content}" /><br/>
+
+        <label>limittime(yyyy/mm/dd):</label>
+        <input type="text" th:field="*{limittimeText}" /><br/>
+        <button type="submit">登録</button>
+    </form>
+</div>
+</body>
+</html>

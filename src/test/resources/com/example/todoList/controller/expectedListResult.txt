@@ -2,36 +2,47 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <script type="text/javascript" src="/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/searchTodo.js"></script>
     <title>Todo List</title>
 </head>
 <body>
 <div class="container">
     <h1>todo list</h1>
+    <form method="post" id=“searchForm”>
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" id="searchCondTitle" name="searchCondTitle" size="10"><input type="button" value="検索" onclick="searchTodo();" >
+            </div>
+        </div>
+    </form>
+    <a href="/inputForm">新規登録</a>
+
     <div class="row">
-    <table id="todoList">
-        <thead>
-        <tr>
-            <td>ID</td>
-            <td>タイトル</td>
-            <td>内容</td>
-            <td>期限</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td>todo1</td>
-            <td>1content</td>
-            <td>2021/04/18</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>todo2</td>
-            <td>2content</td>
-            <td>2021/04/19</td>
-        </tr>
-        </tbody>
-    </table>
+        <table id="todoList">
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td>タイトル</td>
+                <td>内容</td>
+                <td>期限</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>todo1</td>
+                <td>1content</td>
+                <td>2021/04/18</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>todo2</td>
+                <td>2content</td>
+                <td>2021/04/19</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
