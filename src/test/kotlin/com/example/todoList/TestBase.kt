@@ -1,5 +1,6 @@
 package com.example.todoList
 
+import com.example.todoList.entity.Todo
 import org.apache.commons.io.FileUtils
 import org.junit.jupiter.api.Assertions.assertEquals
 import java.io.File
@@ -28,11 +29,13 @@ open class TestBase {
         return if(isSearch) {
             mutableListOf(
                 Todo(5L, "todo5", "5content", toTimestamp("2021/04/20")),
-                Todo(6L, "todo6", "6content", toTimestamp("2021/04/21")))
+                Todo(6L, "todo6", "6content", toTimestamp("2021/04/21"))
+            )
         }else {
             mutableListOf(
                 Todo(1L, "todo1", "1content", toTimestamp("2021/04/18")),
-                Todo(2L, "todo2", "2content", toTimestamp("2021/04/19")))
+                Todo(2L, "todo2", "2content", toTimestamp("2021/04/19"))
+            )
         }
     }
 
