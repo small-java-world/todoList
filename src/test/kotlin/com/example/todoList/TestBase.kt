@@ -38,17 +38,4 @@ open class TestBase {
             )
         }
     }
-
-    fun toTimestamp(dateString: String): Timestamp {
-        val fmt = SimpleDateFormat(TimestampConverter.LIMIT_TIME_FORMAT)
-        return Timestamp(fmt.parse(dateString).time)
-    }
-
-    fun timestampToString(limittime: Timestamp?): String? {
-        if(limittime == null) {
-            return null
-        }
-        val dateFormat = SimpleDateFormat(TimestampConverter.LIMIT_TIME_FORMAT)
-        return dateFormat.format(limittime)
-    }
 }

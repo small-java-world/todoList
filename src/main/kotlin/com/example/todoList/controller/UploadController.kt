@@ -4,6 +4,7 @@ import com.example.todoList.TimestampConverter
 import com.example.todoList.entity.Todo
 import com.example.todoList.form.TodoUploadForm
 import com.example.todoList.service.TodoService
+import com.example.todoList.toTimestamp
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -27,7 +28,6 @@ class UploadController @Autowired constructor(private val todoService: TodoServi
 
     @PostMapping("/upload")
     fun upload(todoUploadForm: TodoUploadForm, model: Model): String? {
-        val dateFormat = SimpleDateFormat(TimestampConverter.LIMIT_TIME_FORMAT)
         val todoList = ArrayList<Todo>()
 
         try {
@@ -36,7 +36,7 @@ class UploadController @Autowired constructor(private val todoService: TodoServi
                 var csvLine = bufferedReader.readLine()
                 while(csvLine != null) {
                     val csvLineElement = csvLine.split(",")
-                    val todo: Todo = Todo(null, csvLineElement[0], csvLineElement[1], Timestamp(dateFormat.parse(csvLineElement[2]).time))
+                    val todo: Todo = Todo(null, csvLineElement[0], csvLineElement[1], toTimestamp(csvLineElement[2]))
                     todoList.add(todo)
                     csvLine = bufferedReader.readLine()
                 }

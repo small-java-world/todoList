@@ -2,8 +2,10 @@ package com.example.todoList.service
 
 import com.example.todoList.entity.Todo
 import com.example.todoList.repository.TodoRepository
+import com.example.todoList.timestampToString
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -37,6 +39,17 @@ class TodoService @Autowired constructor(private val todoRepository: TodoReposit
         }catch (e:Exception) {
             false;
         }
+    }
+
+    fun getDownloadCsvData(): String {
+        var csvList = todoRepository.findAll()
+
+        var stringBuilder = StringBuilder()
+        csvList.forEach() {
+            stringBuilder.append("${it.title},${it.content},${timestampToString(it.limittime!!)}${System.lineSeparator()}")
+        }
+
+        return stringBuilder.toString()
     }
 
 }
