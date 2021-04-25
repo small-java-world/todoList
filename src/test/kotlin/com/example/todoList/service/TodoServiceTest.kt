@@ -1,6 +1,7 @@
 package com.example.todoList.service
 
 import com.example.todoList.TestBase
+import com.example.todoList.entity.Todo
 import com.example.todoList.repository.TodoRepository
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -8,8 +9,11 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import org.assertj.core.api.Assertions
 import org.assertj.core.groups.Tuple
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import java.text.SimpleDateFormat
 
 class TodoServiceTest : TestBase(){
@@ -60,5 +64,21 @@ class TodoServiceTest : TestBase(){
             )
 
         verify(exactly = 1) { todoRepository.findByTitle("%$searchCondTitle%") }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["true", "false"])
+    fun `save`(isSuccess:Boolean) {
+        val todo = Todo(1, "title", "content", toTimestamp("2021/03/20"))
+
+        if(isSuccess) {
+            every { todoRepository.save(todo) } returns todo
+        }else {
+            every { todoRepository.save(todo) }.throws(Exception())
+        }
+
+        assertEquals(isSuccess, todoService.save(todo))
+
+        verify(exactly = 1) { todoRepository.save(todo) }
     }
 }

@@ -30,4 +30,13 @@ class TodoService @Autowired constructor(private val todoRepository: TodoReposit
         }
     }
 
+    fun save(todoList:List<Todo>) :Boolean {
+        return try {
+            todoRepository.saveAll(todoList)
+            true;
+        }catch (e:Exception) {
+            false;
+        }
+    }
+
 }

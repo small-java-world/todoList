@@ -15,7 +15,7 @@ class TimestampConverter : Converter<String, Timestamp> {
      * @return
      */
     override fun convert(dateString:String) : Timestamp {
-        val fmt = SimpleDateFormat("yyyy/MM/dd")
-        return Timestamp(fmt.parse(dateString).time)
+        val dateFormat = SimpleDateFormat(LIMIT_TIME_FORMAT)
+        return Timestamp(dateFormat.parse(dateString).time)
     }
 }

@@ -87,7 +87,7 @@ class EditControllerTest : TestBase() {
     @ParameterizedTest
     @ValueSource(strings = ["true", "false"])
     fun `regist using flashAttr`(isSuccess:Boolean) {
-        val requesttodo = Todo(null, "todo5", "5content", null)
+        val requesttodo = Todo(null, "todo5", "5content", toTimestamp(LIMIT_TIME))
 
         every { todoService.save(requesttodo) } returns isSuccess
 
@@ -132,8 +132,8 @@ class EditControllerTest : TestBase() {
 
     @ParameterizedTest
     @CsvSource(value = ["true,true", "true,false","false,true","false,false"])
-    fun `update or create using flashAttr`(isUpdate:Boolean, isSuccess:Boolean) {
-        val requestTodo = Todo(if(isUpdate) 1 else null, "todo5", "5content", null)
+    fun `regist update or create using flashAttr`(isUpdate:Boolean, isSuccess:Boolean) {
+        val requestTodo = Todo(if(isUpdate) 1 else null, "todo5", "5content", toTimestamp(LIMIT_TIME))
 
         every { todoService.save(requestTodo) } returns isSuccess
 
@@ -142,6 +142,9 @@ class EditControllerTest : TestBase() {
                 .andExpect(status().isFound)
                 .andExpect(redirectedUrl("/top/list"))
                 .andReturn()
+
+            //EditControllerで@SessionAttributes("todo")を指定しているのでTopControllerに遷移するとmodelMapにtodoは含まれない
+            assertFalse(mvcResult.modelAndView!!.modelMap.containsAttribute("todo"))
         }
         else {
             val expectedErrorMessage = if(isUpdate) "更新失敗" else "登録失敗"
