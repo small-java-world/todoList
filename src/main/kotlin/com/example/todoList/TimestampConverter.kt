@@ -5,9 +5,10 @@ import java.sql.Timestamp
 
 class TimestampConverter : Converter<String, Timestamp> {
     /**
-     * Override the convert method
-     * @param date
-     * @return
+     * yyyy/MM/ddの形式の文字列wをTimestampに変換します。
+     *
+     * @param yyyy/MM/ddの形式の文字列
+     * @return Timestamp
      */
     override fun convert(timestampString:String) : Timestamp {
         return toTimestamp(timestampString)

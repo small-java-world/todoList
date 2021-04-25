@@ -8,11 +8,22 @@ import java.net.URL
 import java.nio.charset.StandardCharsets
 
 open class TestBase {
+    /**
+     * 指定ファイルの中身を期待値としてactualと一致するか検証します。
+     * ファイルのパスはcom.example.todoList.controller.TopControllerからfileName="expectedListResult.txt"
+     * で呼び出された場合はbuildディレクトリの配下のclasses/kotlin/test/com/example/todoList/controller/expectedListResult.txt
+     * となります。
+     */
     fun assertFileEquals(expectedResultFileName: String, actual: String) {
         val expectedResult = readText(expectedResultFileName)
         assertEquals(expectedResult, actual)
     }
 
+    /**
+     * com.example.todoList.controller.TopControllerからfileName="expectedListResult.txt"
+     * で呼び出された場合はbuildディレクトリの配下のclasses/kotlin/test/com/example/todoList/controller/expectedListResult.txt
+     * を読み込んで内容の文字列を返却します。
+     */
     private fun readText(fileName: String): String {
         val url: URL = this.javaClass.getResource(".")
         val fileFullPath = url.path + File.separator + fileName
@@ -23,6 +34,9 @@ open class TestBase {
         return "not exist fileName:$fileName"
     }
 
+    /**
+     * モックが返却するMutableList<Todo>を生成して返却します。
+     */
     fun generateMockResultTotoList(isSearch:Boolean): MutableList<Todo> {
         return if(isSearch) {
             mutableListOf(
