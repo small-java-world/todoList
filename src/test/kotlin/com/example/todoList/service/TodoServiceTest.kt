@@ -34,10 +34,10 @@ class TodoServiceTest : TestBase(){
         val todoResultList = todoService.findTodoList()
 
         val dateFormat = SimpleDateFormat("yyyy/MM/dd")
-        Assertions.assertThat(todoResultList).extracting("id", "title", "content", "limittimeText")
+        Assertions.assertThat(todoResultList).extracting("id", "title", "content", "limittime")
             .containsExactly(
-                Tuple.tuple(mockResultTodoList[0].id, mockResultTodoList[0].title, mockResultTodoList[0].content, dateFormat.format(mockResultTodoList[0].limittime)),
-                Tuple.tuple(mockResultTodoList[1].id, mockResultTodoList[1].title, mockResultTodoList[1].content, dateFormat.format(mockResultTodoList[1].limittime)),
+                Tuple.tuple(mockResultTodoList[0].id, mockResultTodoList[0].title, mockResultTodoList[0].content, mockResultTodoList[0].limittime),
+                Tuple.tuple(mockResultTodoList[1].id, mockResultTodoList[1].title, mockResultTodoList[1].content, mockResultTodoList[1].limittime)
             )
 
         verify(exactly = 1) { todoRepository.findAll() }
@@ -53,10 +53,10 @@ class TodoServiceTest : TestBase(){
         val todoResultList = todoService.findTodoListByTitle(searchCondTitle)
 
         val dateFormat = SimpleDateFormat("yyyy/MM/dd")
-        Assertions.assertThat(todoResultList).extracting("id", "title", "content", "limittimeText")
+        Assertions.assertThat(todoResultList).extracting("id", "title", "content", "limittime")
             .containsExactly(
-                Tuple.tuple(mockResultTodoList[0].id, mockResultTodoList[0].title, mockResultTodoList[0].content, dateFormat.format(mockResultTodoList[0].limittime)),
-                Tuple.tuple(mockResultTodoList[1].id, mockResultTodoList[1].title, mockResultTodoList[1].content, dateFormat.format(mockResultTodoList[1].limittime)),
+                Tuple.tuple(mockResultTodoList[0].id, mockResultTodoList[0].title, mockResultTodoList[0].content, mockResultTodoList[0].limittime),
+                Tuple.tuple(mockResultTodoList[1].id, mockResultTodoList[1].title, mockResultTodoList[1].content, mockResultTodoList[1].limittime)
             )
 
         verify(exactly = 1) { todoRepository.findByTitle("%$searchCondTitle%") }

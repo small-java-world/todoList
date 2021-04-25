@@ -1,6 +1,6 @@
 package com.example.todoList.controller
 
-import com.example.todoList.dto.TodoDto
+import com.example.todoList.entity.Todo
 import com.example.todoList.form.TodoListForm
 import com.example.todoList.service.TodoService
 import org.slf4j.Logger
@@ -14,7 +14,7 @@ class SearchController @Autowired constructor(private val todoService: TodoServi
     val logger: Logger = LoggerFactory.getLogger(SearchController::class.java)
 
     @PostMapping("/search")
-    fun search(todoListForm: TodoListForm): List<TodoDto> {
+    fun search(todoListForm: TodoListForm): MutableIterable<Todo> {
         return todoService.findTodoListByTitle(todoListForm.searchCondTitle)
     }
 }

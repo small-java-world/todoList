@@ -11,15 +11,15 @@
     <h1>create todo</h1>
     <form action="/regist" method="post">
         <label>title:</label>
-        <input type="text" id="title" name="title" value="" /><br/>
+        <input type="text" id="title" name="title" value="todo100" /><br/>
         <label>content:</label>
-        <input type="text" id="content" name="content" value="" /><br/>
+        <input type="text" id="content" name="content" value="100content" /><br/>
 
         <label>limittime(yyyy/mm/dd):</label>
-        
         <div>
-            <input type="text" id="limittime" name="limittime" value="" /><br/>
+            <input type="text" id="limittime" name="limittime" value="2021-04-20" /><br/>
         </div>
+        
         <button type="submit">登録</button>
     </form>
 </div>

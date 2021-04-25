@@ -1,5 +1,6 @@
 package com.example.todoList.controller
 
+import com.example.todoList.TestBase
 import com.example.todoList.form.TodoListForm
 import com.example.todoList.service.TodoService
 import com.ninjasquad.springmockk.MockkBean
@@ -15,11 +16,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.text.SimpleDateFormat
 
 
 @ExtendWith(SpringExtension::class)
 @WebMvcTest(TopController::class)
-class TopControllerTest : ControllerTestBase() {
+class TopControllerTest : TestBase() {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
@@ -32,7 +34,7 @@ class TopControllerTest : ControllerTestBase() {
     @Test
     fun `default list`() {
         //todoService.findTodoList()が返却さる結果を生成
-        val mockResultTodoList = generateMockResultTotoDtoList(false)
+        val mockResultTodoList = generateMockResultTotoList(false)
 
         //todoService.findTodoList()でmockResultTodoListが返却されるようにする。
         every { todoService.findTodoList() } returns mockResultTodoList
@@ -57,10 +59,10 @@ class TopControllerTest : ControllerTestBase() {
 
         //todoListForm.todoListをAssertJのextractingで取り出し、containsExactlyのtuple指定で
         //要素が順序も含め完全に一致することを検証しています。
-        assertThat(todoListForm.todoList).extracting("id", "title", "content", "limittimeText")
+        assertThat(todoListForm.todoList).extracting("id", "title", "content", "limittime")
             .containsExactly(
-                tuple(mockResultTodoList[0].id, mockResultTodoList[0].title, mockResultTodoList[0].content, mockResultTodoList[0].limittimeText),
-                tuple(mockResultTodoList[1].id, mockResultTodoList[1].title, mockResultTodoList[1].content, mockResultTodoList[1].limittimeText)
+                tuple(mockResultTodoList[0].id, mockResultTodoList[0].title, mockResultTodoList[0].content, mockResultTodoList[0].limittime),
+                tuple(mockResultTodoList[1].id, mockResultTodoList[1].title, mockResultTodoList[1].content, mockResultTodoList[1].limittime)
             )
 
         //todoService.findTodoList()が呼び出された回数(1)を検証

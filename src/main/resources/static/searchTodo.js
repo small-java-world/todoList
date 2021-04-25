@@ -18,7 +18,7 @@ function searchTodo(){
                 trTag.append($("<td></td>").text(decodeURI(data[i].id)));
                 trTag.append($("<td></td>").text(decodeURI(data[i].title)));
                 trTag.append($("<td></td>").text(decodeURI(data[i].content)));
-                trTag.append($("<td></td>").text(decodeURI(data[i].limittimeText)));
+                trTag.append($("<td></td>").text(decodeURI(data[i].limittime)));
                 $('#todoList').append(trTag);
             }
 

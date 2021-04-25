@@ -1,5 +1,6 @@
 package com.example.todoList.controller
 
+import com.example.todoList.TestBase
 import com.example.todoList.service.TodoService
 import io.mockk.every
 import io.mockk.mockk
@@ -20,7 +21,7 @@ import java.text.SimpleDateFormat
 
 @ExtendWith(SpringExtension::class)
 @WebMvcTest(SearchController::class)
-class SearchControllerTest : ControllerTestBase() {
+class SearchControllerTest : TestBase() {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
@@ -35,24 +36,22 @@ class SearchControllerTest : ControllerTestBase() {
 
     @Test
     fun `search`() {
-        val mockResultTodoDtoList = generateMockResultTotoDtoList(true)
+        val mockResultTodoDtoList = generateMockResultTotoList(true)
 
         val searchCondTitleValue = "searchCondTitleValue"
 
         every { todoService.findTodoListByTitle(searchCondTitleValue) } returns mockResultTodoDtoList
-
-        val dateFormat = SimpleDateFormat("yyyy/MM/dd")
 
         mockMvc.perform(post("/search").param("searchCondTitle", searchCondTitleValue))
                 .andExpect(status().isOk)
             .andExpect(jsonPath("$[0].id").value(mockResultTodoDtoList[0].id))
             .andExpect(jsonPath("$[0].title").value(mockResultTodoDtoList[0].title))
             .andExpect(jsonPath("$[0].content").value(mockResultTodoDtoList[0].content))
-            .andExpect(jsonPath("$[0].limittimeText").value(mockResultTodoDtoList[0].limittimeText))
+            .andExpect(jsonPath("$[0].limittime").value("2021-04-19T15:00:00.000+00:00"))
             .andExpect(jsonPath("$[1].id").value(mockResultTodoDtoList[1].id))
             .andExpect(jsonPath("$[1].title").value(mockResultTodoDtoList[1].title))
             .andExpect(jsonPath("$[1].content").value(mockResultTodoDtoList[1].content))
-            .andExpect(jsonPath("$[1].limittimeText").value(mockResultTodoDtoList[1].limittimeText))
+            .andExpect(jsonPath("$[1].limittime").value("2021-04-20T15:00:00.000+00:00"))
 
         verify(exactly = 1) { todoService.findTodoListByTitle(searchCondTitleValue) }
     }

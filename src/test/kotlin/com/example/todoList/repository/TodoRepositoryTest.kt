@@ -29,17 +29,17 @@ class TodoRepositoryTest @Autowired constructor(val todoRepository: TodoReposito
         val todoResultList1 = todoRepository.findByTitle("%odo%")
         assertThat(todoResultList1).extracting("id", "title", "content")
             .containsExactly(
-                tuple(1L, "todo1", "todo1 content"),
-                tuple(2L, "todo2", "todo2 content"),
-                tuple(3L, "todo3", "todo3 content"),
-                tuple(4L, "todo4", "todo4 content"),
-                tuple(5L, "todo10", "todo10 content"))
+                tuple(1, "todo1", "todo1 content"),
+                tuple(2, "todo2", "todo2 content"),
+                tuple(3, "todo3", "todo3 content"),
+                tuple(4, "todo4", "todo4 content"),
+                tuple(5, "todo10", "todo10 content"))
 
         val todoResultList2 = todoRepository.findByTitle("%odo1%")
         assertThat(todoResultList2).extracting("id", "title", "content")
             .containsExactly(
-                tuple(1L, "todo1", "todo1 content"),
-                tuple(5L, "todo10", "todo10 content"))
+                tuple(1, "todo1", "todo1 content"),
+                tuple(5, "todo10", "todo10 content"))
     }
 
     @Test
@@ -48,8 +48,8 @@ class TodoRepositoryTest @Autowired constructor(val todoRepository: TodoReposito
         val todoResultList1 = todoRepository.findAll()
         assertThat(todoResultList1).extracting("id", "title", "content")
             .containsExactly(
-                tuple(100L, "todo100", "todo100 content"),
-                tuple(200L, "todo200", "todo200 content"))
+                tuple(100, "todo100", "todo100 content"),
+                tuple(200, "todo200", "todo200 content"))
     }
 
 }

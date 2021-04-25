@@ -9,11 +9,11 @@ import java.sql.Timestamp
 data class Todo(
     @Id
     @Column("id")
-    var id: Long?,
+    var id: Int?,
     @Column("title")
-    var title: String,
+    var title: String?,
     @Column("content")
-    var content: String,
+    var content: String?,
     @Column("limittime")
-    var limittime: Timestamp
+    var limittime: Timestamp?
 )

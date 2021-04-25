@@ -28,19 +28,27 @@ open class TestBase {
     fun generateMockResultTotoList(isSearch:Boolean): MutableList<Todo> {
         return if(isSearch) {
             mutableListOf(
-                Todo(5L, "todo5", "5content", toTimestamp("2021/04/20")),
-                Todo(6L, "todo6", "6content", toTimestamp("2021/04/21"))
+                Todo(5, "todo5", "5content", toTimestamp("2021/04/20")),
+                Todo(6, "todo6", "6content", toTimestamp("2021/04/21"))
             )
         }else {
             mutableListOf(
-                Todo(1L, "todo1", "1content", toTimestamp("2021/04/18")),
-                Todo(2L, "todo2", "2content", toTimestamp("2021/04/19"))
+                Todo(1, "todo1", "1content", toTimestamp("2021/04/18")),
+                Todo(2, "todo2", "2content", toTimestamp("2021/04/19"))
             )
         }
     }
 
     fun toTimestamp(dateString: String): Timestamp {
-        val fmt = SimpleDateFormat("yyyy/MM/dd")
+        val fmt = SimpleDateFormat(TimestampConverter.LIMIT_TIME_FORMAT)
         return Timestamp(fmt.parse(dateString).time)
+    }
+
+    fun timestampToString(limittime: Timestamp?): String? {
+        if(limittime == null) {
+            return null
+        }
+        val dateFormat = SimpleDateFormat(TimestampConverter.LIMIT_TIME_FORMAT)
+        return dateFormat.format(limittime)
     }
 }

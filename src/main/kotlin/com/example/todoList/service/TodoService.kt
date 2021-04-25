@@ -1,56 +1,33 @@
 package com.example.todoList.service
 
-import com.example.todoList.dto.TodoDto
 import com.example.todoList.entity.Todo
 import com.example.todoList.repository.TodoRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Service
 class TodoService @Autowired constructor(private val todoRepository: TodoRepository) {
-    companion object {
-        const val LIMIT_TIME_FORMAT = "yyyy/MM/dd"
+    fun findTodoList(): MutableIterable<Todo> {
+        return todoRepository.findAll()
     }
 
-    /**
-     * todoRepository.findAll()の結果をList<TodoDto>に変換して返却
-     */
-    fun findTodoList(): List<TodoDto> {
-        val todoList = todoRepository.findAll()
-        return convertToTodoListResult(todoList)
+    fun findTodoListByTitle(searchCondTitle: String?): MutableIterable<Todo> {
+        return todoRepository.findByTitle("%$searchCondTitle%")
     }
 
-    fun findTodoListByTitle(searchCondTitle: String?): List<TodoDto> {
-        val todoList = todoRepository.findByTitle("%$searchCondTitle%")
-        return convertToTodoListResult(todoList)
+    fun findById(id: Int): Optional<Todo> {
+        return todoRepository.findById(id)
     }
 
-    fun save(todoDto:TodoDto) :Boolean {
-        val dateFormat = SimpleDateFormat(LIMIT_TIME_FORMAT)
-        val limittime = Timestamp(dateFormat.parse(todoDto.limittimeText).time);
-
+    fun save(todo:Todo) :Boolean {
         return try {
-            todoRepository.save(Todo(todoDto.id, todoDto.title!!, todoDto.content!!, limittime))
+            todoRepository.save(todo)
             true;
         }catch (e:Exception) {
             false;
         }
-    }
-
-    /**
-     * MutableIterable<Todo>をList<TodoDto>に変換して返却
-     * といっても、todo.limittimeをyyyy/MM/ddでフォーマットしているだけです。
-     */
-    private fun convertToTodoListResult(todoList: MutableIterable<Todo>): List<TodoDto> {
-        val result = ArrayList<TodoDto>()
-        val dateFormat = SimpleDateFormat(LIMIT_TIME_FORMAT)
-        for (todo in todoList) {
-            val todoDto = TodoDto(todo.id, todo.title, todo.content, todo.limittime, dateFormat.format(todo.limittime))
-            result.add(todoDto)
-        }
-        return result
     }
 
 }

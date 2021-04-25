@@ -9,14 +9,19 @@
 <body>
 <div class="container">
     <h1>create todo</h1>
-    <form action="#" th:action="@{/regist}" method="post" th:object="${todoDto}">
+    <form action="#" th:action="@{/regist}" method="post" th:object="${todo}">
         <label>title:</label>
         <input type="text" th:field="*{title}" /><br/>
         <label>content:</label>
         <input type="text" th:field="*{content}" /><br/>
 
         <label>limittime(yyyy/mm/dd):</label>
-        <input type="text" th:field="*{limittimeText}" /><br/>
+        <div th:if="${todo.limittime != null}">
+            <input type="text" id="limittime" name="limittime" th:value="${#dates.format(new java.util.Date(todo.limittime),'yyyy-MM-dd')}" /><br/>
+        </div>
+        <div th:if="${todo.limittime == null}">
+            <input type="text" th:field="*{limittime}" /><br/>
+        </div>
         <button type="submit">登録</button>
     </form>
 </div>

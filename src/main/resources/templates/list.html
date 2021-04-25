@@ -29,12 +29,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="todo:${todoListForm.todoList}" th:object="${todo}">
-                <td th:text="*{id}"></td>
-                <td th:text="*{title}"></td>
-                <td th:text="*{content}"></td>
-                <td th:text="*{limittimeText}"></td>
-            </tr>
+                <tr th:each="todo:${todoListForm.todoList}" th:object="${todo}">
+                    <td th:text="*{id}"></td>
+                    <td th:text="*{title}"></td>
+                    <td th:text="*{content}"></td>
+                    <td th:text="*{#dates.format(new java.util.Date(limittime), 'yyyy/MM/dd')}"></td>
+                </tr>
             </tbody>
         </table>
     </div>
