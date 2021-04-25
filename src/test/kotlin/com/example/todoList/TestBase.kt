@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import java.io.File
 import java.net.URL
 import java.nio.charset.StandardCharsets
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
 
 open class TestBase {
     fun assertFileEquals(expectedResultFileName: String, actual: String) {
