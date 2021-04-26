@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.SessionAttributes
+import org.springframework.web.bind.support.SessionStatus
 import org.springframework.web.servlet.ModelAndView
 
 
@@ -20,10 +21,21 @@ class EditController @Autowired constructor(private val todoService: TodoService
         return Todo(null, null, null, null)
     }
 
+//    @GetMapping("/inputForm")
+//    fun inputForm(@ModelAttribute todo: Todo): ModelAndView =
+//        ModelAndView("/inputForm").apply { addObject("todo",
+//            todo) }
+
     @GetMapping("/inputForm")
-    fun inputForm(@ModelAttribute todo: Todo): ModelAndView =
-        ModelAndView("/inputForm").apply { addObject("todo",
-            todo) }
+    fun inputForm(@ModelAttribute todo: Todo, model: Model) :String{
+        todo.id == null
+        todo.title = null
+        todo.content = null
+        todo.limittime = null
+
+        model.addAttribute("todo", todo)
+        return "/inputForm"
+    }
 
     @GetMapping("/editForm")
     fun editForm(@ModelAttribute todo: Todo, model: Model): String {
@@ -37,13 +49,22 @@ class EditController @Autowired constructor(private val todoService: TodoService
     }
 
     @PostMapping("/regist")
-    fun regist(@ModelAttribute todo:Todo, model: Model): String {
+    fun regist(@ModelAttribute todo:Todo, model: Model, sessionStatus: SessionStatus): String {
         if(todoService.save(todo)) {
+            //@SessionAttributes("todo")をクリアして/top/listにリダイレクト
+            sessionStatus.setComplete();
             return "redirect:/top/list";
         }
         else {
             model.addAttribute("errorMessage", if(todo.id == null) "登録失敗" else "更新失敗")
             return "/inputForm";
         }
+    }
+
+    @GetMapping("/backToList")
+    fun back(sessionStatus: SessionStatus): String {
+        //@SessionAttributes("todo")をクリアして/top/listにリダイレクト
+        sessionStatus.setComplete();
+        return "redirect:/top/list";
     }
 }

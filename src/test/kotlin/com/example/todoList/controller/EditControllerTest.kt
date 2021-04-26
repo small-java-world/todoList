@@ -66,9 +66,6 @@ class EditControllerTest : TestBase() {
                 .andExpect(status().isFound)
                 .andExpect(redirectedUrl("/top/list"))
                 .andReturn()
-
-            //EditControllerで@SessionAttributes("todo")を指定しているのでTopControllerに遷移するとmodelMapにtodoは含まれない
-            assertFalse(mvcResult.modelAndView!!.modelMap.containsAttribute("todo"))
         }
         else {
             val mvcResult = mockMvc.perform(post("/regist").params(params))
@@ -127,6 +124,8 @@ class EditControllerTest : TestBase() {
         val todo = mvcResult.modelAndView!!.modelMap["todo"] as Todo
         assertEquals(findByIdResult.get(), todo)
 
+        verify(exactly = 1) { todoService.findById(requestTodo.id!!) }
+
         assertFileEquals("editForm.txt",
             mvcResult.response.contentAsString)
     }
@@ -143,9 +142,6 @@ class EditControllerTest : TestBase() {
                 .andExpect(status().isFound)
                 .andExpect(redirectedUrl("/top/list"))
                 .andReturn()
-
-            //EditControllerで@SessionAttributes("todo")を指定しているのでTopControllerに遷移するとmodelMapにtodoは含まれない
-            assertFalse(mvcResult.modelAndView!!.modelMap.containsAttribute("todo"))
         }
         else {
             val expectedErrorMessage = if(isUpdate) "更新失敗" else "登録失敗"
@@ -159,6 +155,12 @@ class EditControllerTest : TestBase() {
         }
 
         verify(exactly = 1) { todoService.save(requestTodo) }
+    }
+
+    fun `backToList`() {
+        mockMvc.perform(get("/backToList"))
+            .andExpect(status().isFound)
+            .andExpect(redirectedUrl("/top/list"))
     }
 
 }

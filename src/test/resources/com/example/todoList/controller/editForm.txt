@@ -8,7 +8,9 @@
 </head>
 <body>
 <div class="container">
-    <h1>create todo</h1>
+    
+    <h1>update todo</h1>
+
     <form action="/regist" method="post">
         <label>title:</label>
         <input type="text" id="title" name="title" value="todo100" /><br/>
@@ -17,10 +19,12 @@
 
         <label>limittime(yyyy/mm/dd):</label>
         <div>
-            <input type="text" id="limittime" name="limittime" value="2021-04-20" /><br/>
+            <input type="text" id="limittime" name="limittime" value="2021/04/20" /><br/>
         </div>
         
         <button type="submit">登録</button>
+        <input type="button" onclick="location.href='./../backToList'" value="戻る">
+
     </form>
 </div>
 </body>
