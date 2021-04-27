@@ -5,12 +5,13 @@ import com.example.todoList.service.TodoService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.SessionAttributes
+import org.springframework.validation.BindingResult
+import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.support.SessionStatus
 import org.springframework.web.servlet.ModelAndView
+import javax.validation.Valid
+import javax.validation.constraints.NotBlank
 
 
 @Controller
@@ -49,15 +50,20 @@ class EditController @Autowired constructor(private val todoService: TodoService
     }
 
     @PostMapping("/regist")
-    fun regist(@ModelAttribute todo:Todo, model: Model, sessionStatus: SessionStatus): String {
-        if(todoService.save(todo)) {
+    fun regist(@ModelAttribute @Valid todo:Todo, bindingResult: BindingResult,
+               model: Model, sessionStatus: SessionStatus
+    ): String {
+        if(bindingResult.hasErrors()){
+            return "/inputForm";
+        }
+
+        return if(todoService.save(todo)) {
             //@SessionAttributes("todo")をクリアして/top/listにリダイレクト
             sessionStatus.setComplete();
-            return "redirect:/top/list";
-        }
-        else {
+            "redirect:/top/list";
+        } else {
             model.addAttribute("errorMessage", if(todo.id == null) "登録失敗" else "更新失敗")
-            return "/inputForm";
+            "/inputForm";
         }
     }
 

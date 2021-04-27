@@ -63,7 +63,7 @@ class EditControllerTest : TestBase() {
 
         if(isSuccess) {
             val mvcResult = mockMvc.perform(post("/regist").params(params))
-                .andExpect(status().isFound)
+                .andExpect(status().is3xxRedirection)
                 .andExpect(redirectedUrl("/top/list"))
                 .andReturn()
         }
@@ -91,7 +91,7 @@ class EditControllerTest : TestBase() {
 
         if(isSuccess) {
             val mvcResult = mockMvc.perform(post("/regist").flashAttr("todo",requesttodo))
-                .andExpect(status().isFound)
+                .andExpect(status().is3xxRedirection)
                 .andExpect(redirectedUrl("/top/list"))
                 .andReturn()
         }
@@ -139,7 +139,7 @@ class EditControllerTest : TestBase() {
 
         if(isSuccess) {
             val mvcResult = mockMvc.perform(post("/regist").flashAttr("todo",requestTodo))
-                .andExpect(status().isFound)
+                .andExpect(status().is3xxRedirection)
                 .andExpect(redirectedUrl("/top/list"))
                 .andReturn()
         }

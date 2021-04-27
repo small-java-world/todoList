@@ -13,7 +13,10 @@
 
     <form action="/regist" method="post">
         <label>title:</label>
-        <input type="text" id="title" name="title" value="" /><br/>
+        <input type="text" id="title" name="title" value="" />
+        
+        <br/>
+
         <label>content:</label>
         <input type="text" id="content" name="content" value="" /><br/>
 

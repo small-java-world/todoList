@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional
     TransactionDbUnitTestExecutionListener::class)
 @Transactional
 class TodoRepositoryTest @Autowired constructor(val todoRepository: TodoRepository){
-
     @Test
     @DatabaseSetup(value = ["/com/example/todoList/findByTitleBaseData"])
     fun findByTitle() {

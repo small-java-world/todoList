@@ -13,7 +13,10 @@
 
     <form action="#" th:action="@{/regist}" method="post" th:object="${todo}">
         <label>title:</label>
-        <input type="text" th:field="*{title}" /><br/>
+        <input type="text" th:field="*{title}" />
+        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"/>
+        <br/>
+
         <label>content:</label>
         <input type="text" th:field="*{content}" /><br/>
 

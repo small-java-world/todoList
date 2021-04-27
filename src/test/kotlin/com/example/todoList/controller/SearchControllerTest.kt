@@ -46,11 +46,13 @@ class SearchControllerTest : TestBase() {
             .andExpect(jsonPath("$[0].id").value(mockResultTodoDtoList[0].id))
             .andExpect(jsonPath("$[0].title").value(mockResultTodoDtoList[0].title))
             .andExpect(jsonPath("$[0].content").value(mockResultTodoDtoList[0].content))
-            .andExpect(jsonPath("$[0].limittime").value("2021-04-19T15:00:00.000+00:00"))
+            .andExpect(jsonPath("$[0].limittime").value("2021/04/20"))
+            .andExpect(jsonPath("$[0].limittimeText").value("2021/04/20"))
             .andExpect(jsonPath("$[1].id").value(mockResultTodoDtoList[1].id))
             .andExpect(jsonPath("$[1].title").value(mockResultTodoDtoList[1].title))
             .andExpect(jsonPath("$[1].content").value(mockResultTodoDtoList[1].content))
-            .andExpect(jsonPath("$[1].limittime").value("2021-04-20T15:00:00.000+00:00"))
+            .andExpect(jsonPath("$[1].limittime").value("2021/04/21"))
+            .andExpect(jsonPath("$[1].limittimeText").value("2021/04/21"))
 
         verify(exactly = 1) { todoService.findTodoListByTitle(searchCondTitleValue) }
     }

@@ -32,7 +32,7 @@ dependencies {
 	runtimeOnly("com.h2database:h2")
 	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 	implementation("org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE")
-
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(module = "mockito-core")
 	}
