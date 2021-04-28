@@ -21,12 +21,7 @@
         <input type="text" th:field="*{content}" /><br/>
 
         <label>limittime(yyyy/mm/dd):</label>
-        <div th:if="${todo.limittime != null}">
-            <input type="text" id="limittime" name="limittime" th:value="${#dates.format(new java.util.Date(todo.limittime),'yyyy/MM/dd')}" /><br/>
-        </div>
-        <div th:if="${todo.limittime == null}">
-            <input type="text" th:field="*{limittime}" /><br/>
-        </div>
+        <input type="text" id="limittime" name="limittime" th:value="${todo.limittime} ? ${#dates.format(todo.limittime, 'yyyy/MM/dd')}" /><br/>
         <button type="submit">登録</button>
         <input type="button" onclick="location.href='./../backToList'" value="戻る">
 

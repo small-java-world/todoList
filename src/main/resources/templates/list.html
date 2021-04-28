@@ -35,7 +35,7 @@
                     <td th:text="*{id}"></td>
                     <td><a th:href="@{/editForm/(id=*{id})}" th:text="*{title}"></a></td>
                     <td th:text="*{content}"></td>
-                    <td th:text="*{#dates.format(new java.util.Date(limittime), 'yyyy/MM/dd')}"></td>
+                    <td th:text="${todo.limittime} ? ${#dates.format(todo.limittime, 'yyyy/MM/dd')}"></td>
                 </tr>
             </tbody>
         </table>

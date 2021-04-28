@@ -24,7 +24,9 @@ data class Todo(
     var content: String?,
     @Column("limittime")
     var limittime: Timestamp?
-) {
-    val limittimeText: String
-        get() = if (limittime != null) timestampToString(limittime!!) else ""
-}
+)
+//getterでlimittimeTextのgetterでアクセス
+//{
+//    val limittimeText: String
+//        get() = if (limittime != null) timestampToString(limittime!!) else ""
+//}

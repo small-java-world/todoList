@@ -21,10 +21,7 @@
         <input type="text" id="content" name="content" value="" /><br/>
 
         <label>limittime(yyyy/mm/dd):</label>
-        
-        <div>
-            <input type="text" id="limittime" name="limittime" value="" /><br/>
-        </div>
+        <input type="text" id="limittime" name="limittime" value="" /><br/>
         <button type="submit">登録</button>
         <input type="button" onclick="location.href='./../backToList'" value="戻る">
 
