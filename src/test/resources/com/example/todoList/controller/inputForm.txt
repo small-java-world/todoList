@@ -18,13 +18,14 @@
         <br/>
 
         <label>content:</label>
-        <input type="text" id="content" name="content" value="" /><br/>
+        <input type="text" id="content" name="content" value="" />
+        
+        <br/>
 
         <label>limittime(yyyy/mm/dd):</label>
         <input type="text" id="limittime" name="limittime" value="" /><br/>
         <button type="submit">登録</button>
         <input type="button" onclick="location.href='./../backToList'" value="戻る">
-
     </form>
 </div>
 </body>

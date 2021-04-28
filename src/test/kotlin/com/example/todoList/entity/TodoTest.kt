@@ -39,8 +39,8 @@ class TodoTest {
         @JvmStatic
         fun validateTodoContentSource(): Stream<Arguments>? {
             return Stream.of(
-                Arguments.of("1234567890123", "0 から 12 の間のサイズにしてください"),
-                Arguments.of("123456789012", null),
+                Arguments.of("123456789012345678901", "0 から 20 の間のサイズにしてください"),
+                Arguments.of("12345678901234567890", null),
                 Arguments.of("", null),
                 Arguments.of(" ", null));
         }

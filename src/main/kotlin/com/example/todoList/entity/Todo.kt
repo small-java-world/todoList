@@ -19,7 +19,7 @@ data class Todo(
     @field: Size(max = 10)
     @Column("title")
     var title: String?,
-    @field: Size(max = 12)
+    @field: Size(max = 20)
     @Column("content")
     var content: String?,
     @Column("limittime")

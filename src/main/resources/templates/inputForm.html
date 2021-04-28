@@ -18,13 +18,14 @@
         <br/>
 
         <label>content:</label>
-        <input type="text" th:field="*{content}" /><br/>
+        <input type="text" th:field="*{content}" />
+        <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"/>
+        <br/>
 
         <label>limittime(yyyy/mm/dd):</label>
         <input type="text" id="limittime" name="limittime" th:value="${todo.limittime} ? ${#dates.format(todo.limittime, 'yyyy/MM/dd')}" /><br/>
         <button type="submit">登録</button>
         <input type="button" onclick="location.href='./../backToList'" value="戻る">
-
     </form>
 </div>
 </body>
