@@ -2,17 +2,21 @@ package com.example.todoList.controller
 
 import com.example.todoList.TestBase
 import com.example.todoList.entity.Todo
+import com.example.todoList.entity.TodoTest
+import com.example.todoList.includePropertyPathMessage
 import com.example.todoList.service.TodoService
 import com.example.todoList.toTimestamp
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.verify
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -157,10 +161,19 @@ class EditControllerTest : TestBase() {
         verify(exactly = 1) { todoService.save(requestTodo) }
     }
 
+    @Test
     fun `backToList`() {
         mockMvc.perform(get("/backToList"))
             .andExpect(status().isFound)
             .andExpect(redirectedUrl("/top/list"))
+    }
+
+    @Test
+    fun `todoがバリデートされている事を確認するだけ`() {
+        //TodoTestでバリデーションのテストのバリエーションを考慮しているのでエラーになる事だけ確認
+        val requestTodo = Todo(null, "", "5content", toTimestamp(LIMIT_TIME))
+        val resultActions = mockMvc.perform(post("/regist").flashAttr("todo",requestTodo))
+        resultActions.andExpect(model().errorCount(1));
     }
 
 }

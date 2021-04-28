@@ -67,6 +67,4 @@ class TodoTest {
         assertEquals(if(errorMessage != null) 1 else 0, violationResult!!.size)
         assertTrue(includePropertyPathMessage("content", errorMessage , violationResult))
     }
-
-
 }
