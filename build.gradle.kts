@@ -51,6 +51,8 @@ tasks.withType<Test> {
 
 sourceSets {
 	test {
+		//assertFileEqualsで読み込むファイルを$buildDir/classes/kotlin/testを基準パスとするために
+		// test/resourcesのファイルを$buildDir/classes/kotlin/testに出力するように変更
 		output.resourcesDir = File("$buildDir/classes/kotlin/test")
 	}
 }
