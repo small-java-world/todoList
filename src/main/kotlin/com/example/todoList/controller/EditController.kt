@@ -18,7 +18,7 @@ import javax.validation.constraints.NotBlank
 @SessionAttributes("todo")
 class EditController @Autowired constructor(private val todoService: TodoService) {
     @ModelAttribute("todo")
-    fun setUpLtodo(): Todo? {
+    fun setupTodo(): Todo? {
         return Todo(null, null, null, null)
     }
 
@@ -27,14 +27,16 @@ class EditController @Autowired constructor(private val todoService: TodoService
 //        ModelAndView("/inputForm").apply { addObject("todo",
 //            todo) }
 
+    /**
+     * /inputFormにgetでアクセスするとinputForm.htmlが返却される。
+     * @ModelAttribute todo: Todoと宣言してるのでmodelに"todo"の名前でtodoがセットされる。
+     */
     @GetMapping("/inputForm")
     fun inputForm(@ModelAttribute todo: Todo, model: Model) :String{
         todo.id == null
         todo.title = null
         todo.content = null
         todo.limittime = null
-
-        model.addAttribute("todo", todo)
         return "/inputForm"
     }
 
