@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-
 @ExtendWith(SpringExtension::class)
 @WebMvcTest(TopController::class)
 class TopControllerTest : TestBase() {
@@ -25,7 +24,7 @@ class TopControllerTest : TestBase() {
     private lateinit var mockMvc: MockMvc
 
     //todoServiceをMockkBeanとしてインジェクション
-    //これでmockMvcが利用するTodoServiceがモック化されます。
+    //これでTopControllerで利用されるTodoServiceがモック化されます。
     @MockkBean
     private lateinit var todoService: TodoService
 
