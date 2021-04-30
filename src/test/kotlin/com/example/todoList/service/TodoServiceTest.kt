@@ -30,7 +30,6 @@ class TodoServiceTest : TestBase(){
         todoService = TodoService(todoRepository)
     }
 
-
     @Test
     fun `testFindTodoList`() {
         val mockResultTodoList = generateMockResultTotoList(false)

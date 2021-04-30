@@ -25,7 +25,7 @@ open class TestBase {
      * を読み込んで内容の文字列を返却します。
      */
     private fun readText(fileName: String): String {
-        val url: URL = this.javaClass.getResource(".")
+        val url = this.javaClass.getResource(".")
         val fileFullPath = url.path + File.separator + fileName
         val targetFile = File(fileFullPath)
         if(targetFile.exists()) {

@@ -2,30 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
-    <script type="text/javascript" th:src="@{/jquery-3.6.0.min.js}"></script>
-    <script type="text/javascript" th:src="@{/searchTodo.js}"></script>
-    <title>Todo List</title>
+    <title>Todo Input Form</title>
 </head>
 <body>
 <div class="container">
-    <h1 th:if="${todo.id == null}">create todo</h1>
-    <h1 th:if="${todo.id != null}">update todo</h1>
+    <h1>create todo</h1>
 
-    <form action="#" th:action="@{/regist}" method="post" th:object="${todo}">
+    <form action="#" th:action="@{/save}" method="post" th:object="${todo}">
         <label>title:</label>
         <input type="text" th:field="*{title}" />
-        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"/>
         <br/>
 
         <label>content:</label>
-        <input type="text" th:field="*{content}" />
-        <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"/>
+        <input type="text" th:field="*{content}" /><span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"/>
         <br/>
 
         <label>limittime(yyyy/mm/dd):</label>
         <input type="text" id="limittime" name="limittime" th:value="${todo.limittime} ? ${#dates.format(todo.limittime, 'yyyy/MM/dd')}" /><br/>
         <button type="submit">登録</button>
-        <input type="button" onclick="location.href='./../backToList'" value="戻る">
     </form>
 </div>
 </body>
