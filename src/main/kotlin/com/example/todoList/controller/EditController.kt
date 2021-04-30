@@ -49,8 +49,8 @@ class EditController @Autowired constructor(private val todoService: TodoService
         return "/inputForm"
     }
 
-    @PostMapping("/regist")
-    fun regist(@ModelAttribute @Valid todo:Todo, bindingResult: BindingResult,
+    @PostMapping("/save")
+    fun save(@ModelAttribute @Valid todo:Todo, bindingResult: BindingResult,
                model: Model, sessionStatus: SessionStatus
     ): String {
         if(bindingResult.hasErrors()){

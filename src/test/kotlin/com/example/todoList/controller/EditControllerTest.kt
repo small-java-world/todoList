@@ -55,7 +55,7 @@ class EditControllerTest : TestBase() {
 
     @ParameterizedTest
     @ValueSource(strings = ["true", "false"])
-    fun `regist`(isSuccess:Boolean) {
+    fun `save`(isSuccess:Boolean) {
         val requestTodo = Todo(null, "todo5", "5content", toTimestamp(LIMIT_TIME))
 
         every { todoService.save(todo = any<Todo>()) } returns isSuccess
@@ -66,13 +66,13 @@ class EditControllerTest : TestBase() {
         params.add("limittime", LIMIT_TIME)
 
         if(isSuccess) {
-            val mvcResult = mockMvc.perform(post("/regist").params(params))
+            val mvcResult = mockMvc.perform(post("/save").params(params))
                 .andExpect(status().is3xxRedirection)
                 .andExpect(redirectedUrl("/top/list"))
                 .andReturn()
         }
         else {
-            val mvcResult = mockMvc.perform(post("/regist").params(params))
+            val mvcResult = mockMvc.perform(post("/save").params(params))
                 .andExpect(status().isOk)
                 .andExpect(view().name("/inputForm"))
                 .andExpect(model().attribute("errorMessage", "登録失敗")).andReturn()
@@ -94,13 +94,13 @@ class EditControllerTest : TestBase() {
         every { todoService.save(requesttodo) } returns isSuccess
 
         if(isSuccess) {
-            val mvcResult = mockMvc.perform(post("/regist").flashAttr("todo",requesttodo))
+            val mvcResult = mockMvc.perform(post("/save").flashAttr("todo",requesttodo))
                 .andExpect(status().is3xxRedirection)
                 .andExpect(redirectedUrl("/top/list"))
                 .andReturn()
         }
         else {
-            val mvcResult = mockMvc.perform(post("/regist").flashAttr("todo",requesttodo))
+            val mvcResult = mockMvc.perform(post("/save").flashAttr("todo",requesttodo))
                 .andExpect(status().isOk)
                 .andExpect(view().name("/inputForm"))
                 .andExpect(model().attribute("errorMessage", "登録失敗")).andReturn()
@@ -136,20 +136,20 @@ class EditControllerTest : TestBase() {
 
     @ParameterizedTest
     @CsvSource(value = ["true,true", "true,false","false,true","false,false"])
-    fun `regist update or create using flashAttr`(isUpdate:Boolean, isSuccess:Boolean) {
+    fun `save update or create using flashAttr`(isUpdate:Boolean, isSuccess:Boolean) {
         val requestTodo = Todo(if(isUpdate) 1 else null, "todo5", "5content", toTimestamp(LIMIT_TIME))
 
         every { todoService.save(requestTodo) } returns isSuccess
 
         if(isSuccess) {
-            val mvcResult = mockMvc.perform(post("/regist").flashAttr("todo",requestTodo))
+            val mvcResult = mockMvc.perform(post("/save").flashAttr("todo",requestTodo))
                 .andExpect(status().is3xxRedirection)
                 .andExpect(redirectedUrl("/top/list"))
                 .andReturn()
         }
         else {
             val expectedErrorMessage = if(isUpdate) "更新失敗" else "登録失敗"
-            val mvcResult = mockMvc.perform(post("/regist").flashAttr("todo",requestTodo))
+            val mvcResult = mockMvc.perform(post("/save").flashAttr("todo",requestTodo))
                 .andExpect(status().isOk)
                 .andExpect(view().name("/inputForm"))
                 .andExpect(model().attribute("errorMessage", expectedErrorMessage)).andReturn()
@@ -172,7 +172,7 @@ class EditControllerTest : TestBase() {
     fun `todoがバリデートされている事を確認するだけ`() {
         //TodoTestでバリデーションのテストのバリエーションを考慮しているのでエラーになる事だけ確認
         val requestTodo = Todo(null, "", "5content", toTimestamp(LIMIT_TIME))
-        val resultActions = mockMvc.perform(post("/regist").flashAttr("todo",requestTodo))
+        val resultActions = mockMvc.perform(post("/save").flashAttr("todo",requestTodo))
         resultActions.andExpect(model().errorCount(1));
     }
 

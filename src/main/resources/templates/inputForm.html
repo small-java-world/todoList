@@ -11,7 +11,7 @@
     <h1 th:if="${todo.id == null}">create todo</h1>
     <h1 th:if="${todo.id != null}">update todo</h1>
 
-    <form action="#" th:action="@{/regist}" method="post" th:object="${todo}">
+    <form action="#" th:action="@{/save}" method="post" th:object="${todo}">
         <label>title:</label>
         <input type="text" th:field="*{title}" />
         <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"/>

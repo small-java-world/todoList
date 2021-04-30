@@ -11,7 +11,7 @@
     
     <h1>update todo</h1>
 
-    <form action="/regist" method="post">
+    <form action="/save" method="post">
         <label>title:</label>
         <input type="text" id="title" name="title" value="todo100" />
         
