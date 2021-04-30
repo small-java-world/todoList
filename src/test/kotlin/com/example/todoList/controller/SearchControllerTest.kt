@@ -2,6 +2,7 @@ package com.example.todoList.controller
 
 import com.example.todoList.TestBase
 import com.example.todoList.service.TodoService
+import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -24,7 +25,7 @@ class SearchControllerTest : TestBase() {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-    @Autowired
+    @MockkBean
     private lateinit var todoService: TodoService
 
     @TestConfiguration

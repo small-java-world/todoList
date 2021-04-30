@@ -38,7 +38,6 @@ class TodoServiceTest : TestBase(){
 
         val todoResultList = todoService.findTodoList()
 
-        val dateFormat = SimpleDateFormat("yyyy/MM/dd")
         Assertions.assertThat(todoResultList).extracting("id", "title", "content", "limittime")
             .containsExactly(
                 Tuple.tuple(mockResultTodoList[0].id, mockResultTodoList[0].title, mockResultTodoList[0].content, mockResultTodoList[0].limittime),
@@ -49,7 +48,7 @@ class TodoServiceTest : TestBase(){
     }
 
     @Test
-    fun `findByTitle`() {
+    fun `testFindTodoListByTitle`() {
         val mockResultTodoList = generateMockResultTotoList(true)
         val searchCondTitle = "titleCond"
 
@@ -57,7 +56,6 @@ class TodoServiceTest : TestBase(){
 
         val todoResultList = todoService.findTodoListByTitle(searchCondTitle)
 
-        val dateFormat = SimpleDateFormat("yyyy/MM/dd")
         Assertions.assertThat(todoResultList).extracting("id", "title", "content", "limittime")
             .containsExactly(
                 Tuple.tuple(mockResultTodoList[0].id, mockResultTodoList[0].title, mockResultTodoList[0].content, mockResultTodoList[0].limittime),

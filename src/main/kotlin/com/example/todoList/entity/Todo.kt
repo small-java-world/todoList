@@ -15,18 +15,14 @@ data class Todo(
     @Id
     @Column("id")
     var id: Int?,
-    @field:NotBlank
-    @field: Size(max = 10)
     @Column("title")
     var title: String?,
-    @field: Size(max = 20)
     @Column("content")
     var content: String?,
     @Column("limittime")
     var limittime: Timestamp?
 )
-//getterでlimittimeTextのgetterでアクセス
-//{
-//    val limittimeText: String
-//        get() = if (limittime != null) timestampToString(limittime!!) else ""
-//}
+{
+    val limittimeText: String
+        get() = if (limittime != null) timestampToString(limittime!!) else ""
+}

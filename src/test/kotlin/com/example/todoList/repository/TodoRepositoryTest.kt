@@ -23,8 +23,18 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class TodoRepositoryTest @Autowired constructor(val todoRepository: TodoRepository){
     @Test
+    @DatabaseSetup(value = ["/com/example/todoList/findAllBaseData"])
+    fun testFindAll() {
+        val todoResultList1 = todoRepository.findAll()
+        assertThat(todoResultList1).extracting("id", "title", "content")
+            .containsExactly(
+                tuple(100, "todo100", "todo100 content"),
+                tuple(200, "todo200", "todo200 content"))
+    }
+
+    @Test
     @DatabaseSetup(value = ["/com/example/todoList/findByTitleBaseData"])
-    fun findByTitle() {
+    fun testFindByTitle() {
         val todoResultList1 = todoRepository.findByTitle("%odo%")
         assertThat(todoResultList1).extracting("id", "title", "content")
             .containsExactly(
@@ -40,15 +50,4 @@ class TodoRepositoryTest @Autowired constructor(val todoRepository: TodoReposito
                 tuple(1, "todo1", "todo1 content"),
                 tuple(5, "todo10", "todo10 content"))
     }
-
-    @Test
-    @DatabaseSetup(value = ["/com/example/todoList/findAllBaseData"])
-    fun findAll() {
-        val todoResultList1 = todoRepository.findAll()
-        assertThat(todoResultList1).extracting("id", "title", "content")
-            .containsExactly(
-                tuple(100, "todo100", "todo100 content"),
-                tuple(200, "todo200", "todo200 content"))
-    }
-
 }
