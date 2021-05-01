@@ -103,7 +103,7 @@ class EditControllerTest : TestBase() {
             //リクエストパラメーターがtodoにマッピングされていることを確認
             val todo = mvcResult.modelAndView!!.modelMap["todo"] as Todo
             assertEquals(requestTodo.title, todo.title)
-            assertEquals(todo.content, todo.content)
+            assertEquals(requestTodo.content, todo.content)
             assertEquals(requestTodo.limittime, todo.limittime)
         }
 
