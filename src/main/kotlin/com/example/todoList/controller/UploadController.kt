@@ -49,6 +49,6 @@ class UploadController @Autowired constructor(private val todoService: TodoServi
             throw RuntimeException("ファイルが読み込めません", e)
         }
 
-        return "/inputForm"
+        return "/uploadForm"
     }
 }
