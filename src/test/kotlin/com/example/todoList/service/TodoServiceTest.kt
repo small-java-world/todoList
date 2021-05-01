@@ -1,6 +1,7 @@
 package com.example.todoList.service
 
 import com.example.todoList.TestBase
+import com.example.todoList.controller.EditControllerTest
 import com.example.todoList.entity.Todo
 import com.example.todoList.repository.TodoRepository
 import com.example.todoList.toTimestamp
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import java.text.SimpleDateFormat
+import java.util.*
 
 class TodoServiceTest : TestBase(){
 
@@ -67,9 +69,10 @@ class TodoServiceTest : TestBase(){
 
     @ParameterizedTest
     @ValueSource(strings = ["true", "false"])
-    fun `save`(isSuccess:Boolean) {
+    fun `test save todo`(isSuccess:Boolean) {
         val todo = Todo(1, "title", "content", toTimestamp("2021/03/20"))
 
+        //モックであるtodoRepository#saveの結果を指定
         if(isSuccess) {
             every { todoRepository.save(todo) } returns todo
         }else {
@@ -78,6 +81,22 @@ class TodoServiceTest : TestBase(){
 
         assertEquals(isSuccess, todoService.save(todo))
 
+        //todoRepository.saveの呼び出し回数を確認
         verify(exactly = 1) { todoRepository.save(todo) }
+    }
+
+    @Test
+    fun `testFindById`() {
+        val id = 1111
+        val todo: Optional<Todo> = Optional.of(Todo(id, "todo100", "100content", toTimestamp(
+            "2021/03/20"
+        )))
+
+        every { todoRepository.findById(id) } returns todo
+
+        val findByIdResult = todoService.findById(id)
+
+        assertEquals(todo,findByIdResult )
+        verify(exactly = 1) { todoRepository.findById(id) }
     }
 }

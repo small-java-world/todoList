@@ -32,39 +32,39 @@ class EditController @Autowired constructor(private val todoService: TodoService
      * @ModelAttribute todo: Todoと宣言してるのでmodelに"todo"の名前でtodoがセットされる。
      */
     @GetMapping("/inputForm")
-    fun inputForm(@ModelAttribute todo: Todo, model: Model) :String{
-        todo.id == null
-        todo.title = null
-        todo.content = null
-        todo.limittime = null
-        return "/inputForm"
-    }
-
-    @GetMapping("/editForm")
-    fun editForm(@ModelAttribute todo: Todo, model: Model): String {
-        if(todo.id != null) {
+    fun inputForm(@ModelAttribute todo: Todo, model: Model): String {
+        if (todo.id != null) {
+            //パラメータのidで検索
             val resultTodo = todoService.findById(todo.id!!)
-            if(resultTodo != null) {
+            if (resultTodo != null) {
+                //検索結果が存在する場合はmodelに"todo"の属性名でセット
                 model.addAttribute("todo", resultTodo.get())
             }
+        } else {
+            todo.id == null
+            todo.title = null
+            todo.content = null
+            todo.limittime = null
         }
         return "/inputForm"
     }
 
+
     @PostMapping("/save")
-    fun save(@ModelAttribute @Valid todo:Todo, bindingResult: BindingResult,
-               model: Model, sessionStatus: SessionStatus
+    fun save(
+        @ModelAttribute @Valid todo: Todo, bindingResult: BindingResult,
+        model: Model, sessionStatus: SessionStatus
     ): String {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "/inputForm";
         }
 
-        return if(todoService.save(todo)) {
+        return if (todoService.save(todo)) {
             //@SessionAttributes("todo")をクリアして/top/listにリダイレクト
             sessionStatus.setComplete();
             "redirect:/top/list";
         } else {
-            model.addAttribute("errorMessage", if(todo.id == null) "登録失敗" else "更新失敗")
+            model.addAttribute("errorMessage", if (todo.id == null) "登録失敗" else "更新失敗")
             "/inputForm";
         }
     }
