@@ -4,7 +4,6 @@ import com.example.todoList.entity.Todo
 import org.apache.commons.io.FileUtils
 import org.junit.jupiter.api.Assertions.assertEquals
 import java.io.File
-import java.net.URL
 import java.nio.charset.StandardCharsets
 
 open class TestBase {
@@ -25,7 +24,7 @@ open class TestBase {
      * を読み込んで内容の文字列を返却します。
      */
     private fun readText(fileName: String): String {
-        val url: URL = this.javaClass.getResource(".")
+        val url = this.javaClass.getResource(".")
         val fileFullPath = url.path + File.separator + fileName
         val targetFile = File(fileFullPath)
         if(targetFile.exists()) {
