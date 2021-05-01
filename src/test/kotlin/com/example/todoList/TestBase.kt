@@ -4,7 +4,6 @@ import com.example.todoList.entity.Todo
 import org.apache.commons.io.FileUtils
 import org.junit.jupiter.api.Assertions.assertEquals
 import java.io.File
-import java.net.URL
 import java.nio.charset.StandardCharsets
 
 open class TestBase {

@@ -15,9 +15,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import java.text.SimpleDateFormat
+import java.util.*
 
-class TodoServiceTest : TestBase(){
+class TodoServiceTest : TestBase() {
 
     lateinit var todoService: TodoService
 
@@ -39,8 +39,18 @@ class TodoServiceTest : TestBase(){
 
         Assertions.assertThat(todoResultList).extracting("id", "title", "content", "limittime")
             .containsExactly(
-                Tuple.tuple(mockResultTodoList[0].id, mockResultTodoList[0].title, mockResultTodoList[0].content, mockResultTodoList[0].limittime),
-                Tuple.tuple(mockResultTodoList[1].id, mockResultTodoList[1].title, mockResultTodoList[1].content, mockResultTodoList[1].limittime)
+                Tuple.tuple(
+                    mockResultTodoList[0].id,
+                    mockResultTodoList[0].title,
+                    mockResultTodoList[0].content,
+                    mockResultTodoList[0].limittime
+                ),
+                Tuple.tuple(
+                    mockResultTodoList[1].id,
+                    mockResultTodoList[1].title,
+                    mockResultTodoList[1].content,
+                    mockResultTodoList[1].limittime
+                )
             )
 
         verify(exactly = 1) { todoRepository.findAll() }
@@ -57,8 +67,18 @@ class TodoServiceTest : TestBase(){
 
         Assertions.assertThat(todoResultList).extracting("id", "title", "content", "limittime")
             .containsExactly(
-                Tuple.tuple(mockResultTodoList[0].id, mockResultTodoList[0].title, mockResultTodoList[0].content, mockResultTodoList[0].limittime),
-                Tuple.tuple(mockResultTodoList[1].id, mockResultTodoList[1].title, mockResultTodoList[1].content, mockResultTodoList[1].limittime)
+                Tuple.tuple(
+                    mockResultTodoList[0].id,
+                    mockResultTodoList[0].title,
+                    mockResultTodoList[0].content,
+                    mockResultTodoList[0].limittime
+                ),
+                Tuple.tuple(
+                    mockResultTodoList[1].id,
+                    mockResultTodoList[1].title,
+                    mockResultTodoList[1].content,
+                    mockResultTodoList[1].limittime
+                )
             )
 
         verify(exactly = 1) { todoRepository.findByTitle("%$searchCondTitle%") }
@@ -66,17 +86,34 @@ class TodoServiceTest : TestBase(){
 
     @ParameterizedTest
     @ValueSource(strings = ["true", "false"])
-    fun `save`(isSuccess:Boolean) {
+    fun `test save todo`(isSuccess: Boolean) {
         val todo = Todo(1, "title", "content", toTimestamp("2021/03/20"))
 
-        if(isSuccess) {
+        //モックであるtodoRepository#saveの結果を指定
+        if (isSuccess) {
             every { todoRepository.save(todo) } returns todo
-        }else {
+        } else {
             every { todoRepository.save(todo) }.throws(Exception())
         }
 
         assertEquals(isSuccess, todoService.save(todo))
 
+        //todoRepository.saveの呼び出し回数を確認
         verify(exactly = 1) { todoRepository.save(todo) }
+    }
+
+    @Test
+    fun `testFindById`() {
+        val id = 1111
+        val todo: Optional<Todo> = Optional.of(Todo(id, "todo100", "100content", toTimestamp(
+            "2021/03/20"
+        )))
+
+        every { todoRepository.findById(id) } returns todo
+
+        val findByIdResult = todoService.findById(id)
+
+        assertEquals(todo,findByIdResult )
+        verify(exactly = 1) { todoRepository.findById(id) }
     }
 }

@@ -16,6 +16,7 @@
             </div>
         </div>
     </form>
+    <a href="/inputForm">新規登録</a>
 
     <div class="row">
         <table id="todoList">
@@ -30,13 +31,13 @@
             <tbody>
             <tr>
                 <td>1</td>
-                <td>todo1</td>
+                <td><a href="/editForm/?id=1">todo1</a></td>
                 <td>1content</td>
                 <td>2021/04/18</td>
             </tr>
             <tr>
                 <td>2</td>
-                <td>todo2</td>
+                <td><a href="/editForm/?id=2">todo2</a></td>
                 <td>2content</td>
                 <td>2021/04/19</td>
             </tr>

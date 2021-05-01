@@ -6,7 +6,8 @@
 </head>
 <body>
 <div class="container">
-    <h1>create todo</h1>
+    <h1 th:if="${todo.id == null}">create todo</h1>
+    <h1 th:if="${todo.id != null}">update todo</h1>
 
     <form action="#" th:action="@{/save}" method="post" th:object="${todo}">
         <label>title:</label>
@@ -20,6 +21,7 @@
         <label>limittime(yyyy/mm/dd):</label>
         <input type="text" id="limittime" name="limittime" th:value="${todo.limittime} ? ${#dates.format(todo.limittime, 'yyyy/MM/dd')}" /><br/>
         <button type="submit">登録</button>
+        <input type="button" onclick="location.href='./../backToList'" value="戻る">
     </form>
 </div>
 </body>

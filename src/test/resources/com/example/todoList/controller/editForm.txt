@@ -6,20 +6,20 @@
 </head>
 <body>
 <div class="container">
-    <h1>create todo</h1>
     
+    <h1>update todo</h1>
 
     <form action="/save" method="post">
         <label>title:</label>
-        <input type="text" id="title" name="title" value="" />
+        <input type="text" id="title" name="title" value="todo100" />
         <br/>
 
         <label>content:</label>
-        <input type="text" id="content" name="content" value="" />
+        <input type="text" id="content" name="content" value="100content" />
         <br/>
 
         <label>limittime(yyyy/mm/dd):</label>
-        <input type="text" id="limittime" name="limittime" value="" /><br/>
+        <input type="text" id="limittime" name="limittime" value="2021/04/20" /><br/>
         <button type="submit">登録</button>
         <input type="button" onclick="location.href='./../backToList'" value="戻る">
     </form>

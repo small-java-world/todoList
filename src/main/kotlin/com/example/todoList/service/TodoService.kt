@@ -4,6 +4,7 @@ import com.example.todoList.entity.Todo
 import com.example.todoList.repository.TodoRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class TodoService @Autowired constructor(private val todoRepository: TodoRepository) {
@@ -23,4 +24,9 @@ class TodoService @Autowired constructor(private val todoRepository: TodoReposit
             false;
         }
     }
+
+    fun findById(id: Int): Optional<Todo> {
+        return todoRepository.findById(id)
+    }
+
 }

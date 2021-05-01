@@ -16,6 +16,7 @@
             </div>
         </div>
     </form>
+    <a href="/inputForm" th:href="@{/inputForm}">新規登録</a>
 
     <div class="row">
         <table id="todoList">
@@ -30,7 +31,7 @@
             <tbody>
             <tr th:each="todo:${todoListForm.todoList}" th:object="${todo}">
                 <td th:text="*{id}"></td>
-                <td th:text="*{title}"></td>
+                <td><a th:href="@{/editForm/(id=*{id})}" th:text="*{title}"></a></td>
                 <td th:text="*{content}"></td>
                 <td th:text="${todo.limittime} ? ${#dates.format(todo.limittime, 'yyyy/MM/dd')}"></td>
             </tr>
