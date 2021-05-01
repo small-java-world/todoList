@@ -2,21 +2,15 @@ package com.example.todoList.controller
 
 import com.example.todoList.TestBase
 import com.example.todoList.entity.Todo
-import com.example.todoList.entity.TodoTest
-import com.example.todoList.includePropertyPathMessage
 import com.example.todoList.service.TodoService
 import com.example.todoList.toTimestamp
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -56,13 +50,13 @@ class EditControllerTest : TestBase() {
     }
 
     @Test
-    fun `inputForm edit`() {
+    fun `editForm test`() {
         val requestTodo = Todo(100, null, null, null)
         val findByIdResult: Optional<Todo> = Optional.of(Todo(100, "todo100", "100content", toTimestamp(LIMIT_TIME)))
 
         every { todoService.findById(requestTodo.id!!) } returns findByIdResult
 
-        val mvcResult = mockMvc.perform(get("/inputForm").flashAttr("todo", requestTodo))
+        val mvcResult = mockMvc.perform(get("/editForm").flashAttr("todo", requestTodo))
             .andExpect(view().name("/inputForm"))
             .andExpect(status().isOk)
             .andReturn()
@@ -77,6 +71,7 @@ class EditControllerTest : TestBase() {
             mvcResult.response.contentAsString
         )
     }
+
 
     @ParameterizedTest
     @ValueSource(strings = ["true", "false"])
@@ -141,33 +136,6 @@ class EditControllerTest : TestBase() {
         verify(exactly = 1) { todoService.save(requestTodo) }
     }
 
-
-    @ParameterizedTest
-    @CsvSource(value = ["true,true", "true,false", "false,true", "false,false"])
-    fun `save update or create using flashAttr`(isUpdate: Boolean, isSuccess: Boolean) {
-        val requestTodo = Todo(if (isUpdate) 1 else null, "todo5", "5content", toTimestamp(LIMIT_TIME))
-
-        every { todoService.save(requestTodo) } returns isSuccess
-
-        if (isSuccess) {
-            val mvcResult = mockMvc.perform(post("/save").flashAttr("todo", requestTodo))
-                .andExpect(status().is3xxRedirection)
-                .andExpect(redirectedUrl("/top/list"))
-                .andReturn()
-        } else {
-            val expectedErrorMessage = if (isUpdate) "更新失敗" else "登録失敗"
-            val mvcResult = mockMvc.perform(post("/save").flashAttr("todo", requestTodo))
-                .andExpect(status().isOk)
-                .andExpect(view().name("/inputForm"))
-                .andExpect(model().attribute("errorMessage", expectedErrorMessage)).andReturn()
-
-            val todo = mvcResult.modelAndView!!.modelMap["todo"] as Todo
-            assertEquals(requestTodo, todo)
-        }
-
-        verify(exactly = 1) { todoService.save(requestTodo) }
-    }
-
     @Test
     fun `backToList`() {
         mockMvc.perform(get("/backToList"))
@@ -182,5 +150,4 @@ class EditControllerTest : TestBase() {
         val resultActions = mockMvc.perform(post("/save").flashAttr("todo", requestTodo))
         resultActions.andExpect(model().errorCount(1));
     }
-
 }

@@ -1,18 +1,21 @@
 package com.example.todoList
 
-import com.example.todoList.entity.Todo
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
 import javax.validation.ConstraintViolation
 
-//errorMessageがnot nullの場合はvalidationResultにpropertyPath=titleでmessage=errorMessageの結果が含まれる確認
-//errorMessageがnullの場合はvalidationResultにpropertyPath=titleの結果が含まれないこと確認
-fun <T> includePropertyPathMessage(propertyPath: String, errorMessage:String?, validationResult: MutableSet<ConstraintViolation<T>>?): Boolean {
+//expectedErrorMessageがnot nullの場合は、validationResultにpropertyPath=expectedPropertyPathでmessage=expectedErrorMessageの結果が含まれる場合true
+//expectedErrorMessageがnullの場合は、validationResultにpropertyPath=expectedPropertyPathの結果が含まれない場合true
+//それ以外はfalseを返却します。
+fun <T> includePropertyPathMessage(
+    expectedPropertyPath: String,
+    expectedErrorMessage: String?,
+    validationResult: MutableSet<ConstraintViolation<T>>?
+): Boolean {
     if (validationResult != null) {
-        return if(errorMessage == null) {
-            !validationResult.stream().anyMatch { it -> it.propertyPath.toString() == propertyPath}
+        return if (expectedErrorMessage == null) {
+            !validationResult.stream().anyMatch { it -> it.propertyPath.toString() == expectedPropertyPath }
         } else {
-            validationResult.stream().anyMatch { it -> it.propertyPath.toString() == propertyPath && it.message == errorMessage}
+            validationResult.stream()
+                .anyMatch { it -> it.propertyPath.toString() == expectedPropertyPath && it.message == expectedErrorMessage }
         }
     }
     return false;

@@ -1,7 +1,6 @@
 package com.example.todoList.service
 
 import com.example.todoList.TestBase
-import com.example.todoList.controller.EditControllerTest
 import com.example.todoList.entity.Todo
 import com.example.todoList.repository.TodoRepository
 import com.example.todoList.toTimestamp
@@ -16,7 +15,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import java.text.SimpleDateFormat
 import java.util.*
 
 class TodoServiceTest : TestBase(){

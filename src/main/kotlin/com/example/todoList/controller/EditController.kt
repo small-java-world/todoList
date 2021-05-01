@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
-import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.SessionAttributes
 import org.springframework.web.bind.support.SessionStatus
-import org.springframework.web.servlet.ModelAndView
 import javax.validation.Valid
-import javax.validation.constraints.NotBlank
 
 
 @Controller
@@ -22,17 +22,18 @@ class EditController @Autowired constructor(private val todoService: TodoService
         return Todo(null, null, null, null)
     }
 
-//    @GetMapping("/inputForm")
-//    fun inputForm(@ModelAttribute todo: Todo): ModelAndView =
-//        ModelAndView("/inputForm").apply { addObject("todo",
-//            todo) }
-
-    /**
-     * /inputFormにgetでアクセスするとinputForm.htmlが返却される。
-     * @ModelAttribute todo: Todoと宣言してるのでmodelに"todo"の名前でtodoがセットされる。
-     */
     @GetMapping("/inputForm")
     fun inputForm(@ModelAttribute todo: Todo, model: Model): String {
+        //更新画面->ブラウザの戻るボタン->新規登録で更新対象のtodoが表示されるのでクリア
+        todo.id == null
+        todo.title = null
+        todo.content = null
+        todo.limittime = null
+        return "/inputForm"
+    }
+
+    @GetMapping("/editForm")
+    fun editForm(@ModelAttribute todo: Todo, model: Model): String {
         if (todo.id != null) {
             //パラメータのidで検索
             val resultTodo = todoService.findById(todo.id!!)
@@ -41,6 +42,7 @@ class EditController @Autowired constructor(private val todoService: TodoService
                 model.addAttribute("todo", resultTodo.get())
             }
         } else {
+            //パラメータのidが飛んで来なかった場合はtodoの値をクリア、
             todo.id == null
             todo.title = null
             todo.content = null
@@ -48,7 +50,6 @@ class EditController @Autowired constructor(private val todoService: TodoService
         }
         return "/inputForm"
     }
-
 
     @PostMapping("/save")
     fun save(
@@ -70,7 +71,7 @@ class EditController @Autowired constructor(private val todoService: TodoService
     }
 
     @GetMapping("/backToList")
-    fun back(sessionStatus: SessionStatus): String {
+    fun backToList(sessionStatus: SessionStatus): String {
         //@SessionAttributes("todo")をクリアして/top/listにリダイレクト
         sessionStatus.setComplete();
         return "redirect:/top/list";
