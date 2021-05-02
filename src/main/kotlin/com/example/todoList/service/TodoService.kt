@@ -21,20 +21,20 @@ class TodoService @Autowired constructor(private val todoRepository: TodoReposit
         return todoRepository.findById(id)
     }
 
-    fun save(todo:Todo) :Boolean {
+    fun save(todo: Todo): Boolean {
         return try {
             todoRepository.save(todo)
             true;
-        }catch (e:Exception) {
+        } catch (e: Exception) {
             false;
         }
     }
 
-    fun save(todoList:List<Todo>) :Boolean {
+    fun saveAll(todoList: List<Todo>): Boolean {
         return try {
             todoRepository.saveAll(todoList)
             true;
-        }catch (e:Exception) {
+        } catch (e: Exception) {
             false;
         }
     }
@@ -46,7 +46,6 @@ class TodoService @Autowired constructor(private val todoRepository: TodoReposit
         csvList.forEach() {
             stringBuilder.append("${it.title},${it.content},${timestampToString(it.limittime!!)}${System.lineSeparator()}")
         }
-
         return stringBuilder.toString()
     }
 

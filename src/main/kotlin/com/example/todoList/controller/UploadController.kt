@@ -16,11 +16,10 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
 
-
 @Controller
 class UploadController @Autowired constructor(private val todoService: TodoService) {
     @GetMapping("/uploadForm")
-    fun inputForm(@ModelAttribute todoUploadForm: TodoUploadForm): ModelAndView =
+    fun uploadForm(@ModelAttribute todoUploadForm: TodoUploadForm): ModelAndView =
         ModelAndView("/uploadForm")
 
     @PostMapping("/upload")
@@ -28,8 +27,10 @@ class UploadController @Autowired constructor(private val todoService: TodoServi
         val todoList = ArrayList<Todo>()
 
         try {
-            BufferedReader(InputStreamReader(todoUploadForm.uploadedFile!!.inputStream, StandardCharsets.UTF_8)).use {
+            BufferedReader(InputStreamReader(todoUploadForm.uploadedFile?.inputStream, StandardCharsets.UTF_8)).use {
                     bufferedReader ->
+
+                //アップロードされたファイルを読み込んで各行のデータをTodoに変換し、todoListに追加する。
                 var csvLine = bufferedReader.readLine()
                 while(csvLine != null) {
                     val csvLineElement = csvLine.split(",")
@@ -38,7 +39,7 @@ class UploadController @Autowired constructor(private val todoService: TodoServi
                     csvLine = bufferedReader.readLine()
                 }
 
-                if(!todoService.save(todoList)) {
+                if(!todoService.saveAll(todoList)) {
                     model.addAttribute("errorMessage", "アップロード失敗")
                     return "/uploadForm"
                 }

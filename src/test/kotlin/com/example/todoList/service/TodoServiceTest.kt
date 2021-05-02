@@ -17,7 +17,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import java.util.*
 
-class TodoServiceTest : TestBase(){
+class TodoServiceTest : TestBase() {
 
     lateinit var todoService: TodoService
 
@@ -40,8 +40,18 @@ class TodoServiceTest : TestBase(){
 
         Assertions.assertThat(todoResultList).extracting("id", "title", "content", "limittime")
             .containsExactly(
-                Tuple.tuple(mockResultTodoList[0].id, mockResultTodoList[0].title, mockResultTodoList[0].content, mockResultTodoList[0].limittime),
-                Tuple.tuple(mockResultTodoList[1].id, mockResultTodoList[1].title, mockResultTodoList[1].content, mockResultTodoList[1].limittime)
+                Tuple.tuple(
+                    mockResultTodoList[0].id,
+                    mockResultTodoList[0].title,
+                    mockResultTodoList[0].content,
+                    mockResultTodoList[0].limittime
+                ),
+                Tuple.tuple(
+                    mockResultTodoList[1].id,
+                    mockResultTodoList[1].title,
+                    mockResultTodoList[1].content,
+                    mockResultTodoList[1].limittime
+                )
             )
 
         verify(exactly = 1) { todoRepository.findAll() }
@@ -58,8 +68,18 @@ class TodoServiceTest : TestBase(){
 
         Assertions.assertThat(todoResultList).extracting("id", "title", "content", "limittime")
             .containsExactly(
-                Tuple.tuple(mockResultTodoList[0].id, mockResultTodoList[0].title, mockResultTodoList[0].content, mockResultTodoList[0].limittime),
-                Tuple.tuple(mockResultTodoList[1].id, mockResultTodoList[1].title, mockResultTodoList[1].content, mockResultTodoList[1].limittime)
+                Tuple.tuple(
+                    mockResultTodoList[0].id,
+                    mockResultTodoList[0].title,
+                    mockResultTodoList[0].content,
+                    mockResultTodoList[0].limittime
+                ),
+                Tuple.tuple(
+                    mockResultTodoList[1].id,
+                    mockResultTodoList[1].title,
+                    mockResultTodoList[1].content,
+                    mockResultTodoList[1].limittime
+                )
             )
 
         verify(exactly = 1) { todoRepository.findByTitle("%$searchCondTitle%") }
@@ -67,13 +87,13 @@ class TodoServiceTest : TestBase(){
 
     @ParameterizedTest
     @ValueSource(strings = ["true", "false"])
-    fun `test save todo`(isSuccess:Boolean) {
+    fun `test save todo`(isSuccess: Boolean) {
         val todo = Todo(1, "title", "content", toTimestamp("2021/03/20"))
 
         //モックであるtodoRepository#saveの結果を指定
-        if(isSuccess) {
+        if (isSuccess) {
             every { todoRepository.save(todo) } returns todo
-        }else {
+        } else {
             every { todoRepository.save(todo) }.throws(Exception())
         }
 
@@ -83,18 +103,56 @@ class TodoServiceTest : TestBase(){
         verify(exactly = 1) { todoRepository.save(todo) }
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = ["true", "false"])
+    fun `test saveAll`(isSuccess: Boolean) {
+        val saveAllTargetList = generateMockResultTotoList(true)
+
+        //モックであるtodoRepository#saveAllの結果を指定
+        if (isSuccess) {
+            every { todoRepository.saveAll(saveAllTargetList) } returns saveAllTargetList
+        } else {
+            every { todoRepository.saveAll(saveAllTargetList) }.throws(Exception())
+        }
+
+        assertEquals(isSuccess, todoService.saveAll(saveAllTargetList))
+
+        //todoRepository.saveの呼び出し回数を確認
+        verify(exactly = 1) { todoRepository.saveAll(saveAllTargetList) }
+    }
+
     @Test
     fun `testFindById`() {
         val id = 1111
-        val todo: Optional<Todo> = Optional.of(Todo(id, "todo100", "100content", toTimestamp(
-            "2021/03/20"
-        )))
+        val todo: Optional<Todo> = Optional.of(
+            Todo(
+                id, "todo100", "100content", toTimestamp(
+                    "2021/03/20"
+                )
+            )
+        )
 
         every { todoRepository.findById(id) } returns todo
 
         val findByIdResult = todoService.findById(id)
 
-        assertEquals(todo,findByIdResult )
+        assertEquals(todo, findByIdResult)
         verify(exactly = 1) { todoRepository.findById(id) }
     }
+
+    @Test
+    fun `tetGetDownloadCsvData`() {
+        val findAllResultList = generateMockResultTotoList(true)
+
+        every { todoRepository.findAll() } returns findAllResultList
+
+        val result = todoService.getDownloadCsvData()
+
+        assertEquals(
+            "todo5,5content,2021/04/20${System.lineSeparator()}todo6,6content,2021/04/21${System.lineSeparator()}",
+            result
+        )
+        verify(exactly = 1) { todoRepository.findAll() }
+    }
+
 }
