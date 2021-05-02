@@ -124,7 +124,7 @@ class TodoServiceTest : TestBase() {
     @Test
     fun `testFindById`() {
         val id = 1111
-        val todo: Optional<Todo> = Optional.of(
+        val todo = Optional.of(
             Todo(
                 id, "todo100", "100content", toTimestamp(
                     "2021/03/20"

@@ -52,7 +52,7 @@ class EditControllerTest : TestBase() {
     @Test
     fun `editForm test`() {
         val requestTodo = Todo(100, null, null, null)
-        val findByIdResult: Optional<Todo> = Optional.of(Todo(100, "todo100", "100content", toTimestamp(LIMIT_TIME)))
+        val findByIdResult = Optional.of(Todo(100, "todo100", "100content", toTimestamp(LIMIT_TIME)))
 
         every { todoService.findById(requestTodo.id!!) } returns findByIdResult
 
